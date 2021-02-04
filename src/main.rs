@@ -1,7 +1,7 @@
 use std::env;
 use std::collections::HashMap;
 use tide::prelude::*;
-use tide::{http::mime, Body, Request, Response, StatusCode};
+use tide::{http::mime, Body, Request, Response, StatusCode, log};
 
 #[derive(Debug, Serialize)]
 struct HelloResponse {
@@ -15,7 +15,11 @@ struct HelloRequest {
 
 #[async_std::main]
 async fn main() -> tide::Result<()> {
+    log::start();
+
     let mut app = tide::new();
+    
+    app.with(tide::log::LogMiddleware::new());
     app.at("/hello").post(get_hello);
     app.at("/headers").get(get_headers);
     
@@ -24,7 +28,10 @@ async fn main() -> tide::Result<()> {
         Err(_e) => "3000".to_string(),
     };
 
+    
+
     app.listen(format!("0.0.0.0:{}", port)).await?;
+
     Ok(())
 }
 
