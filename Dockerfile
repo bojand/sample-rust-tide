@@ -1,30 +1,27 @@
-FROM rust:1.49 as planner
-WORKDIR app
-RUN pwd
+FROM rust:1.49 as base
+WORKDIR /app
 # We only pay the installation cost once, 
 # it will be cached from the second build onwards
 RUN cargo install cargo-chef 
-COPY . .
-RUN cargo chef prepare  --recipe-path recipe.json
 
-FROM rust:1.49 as cacher
-WORKDIR app
-RUN pwd
-RUN cargo install cargo-chef
-COPY --from=planner /app/recipe.json recipe.json
-RUN cargo chef cook --release --recipe-path recipe.json
+FROM base as planner
+COPY . .
+RUN cargo chef prepare --recipe-path /app/recipe.json
+
+FROM base as cacher
+WORKDIR /app
+COPY --from=planner /app/recipe.json /app/recipe.json
+RUN cargo chef cook --release --recipe-path /app/recipe.json
 
 FROM rust:1.49 as builder
-WORKDIR app
-RUN pwd
+WORKDIR /app
 COPY . .
 # Copy over the cached dependencies
 COPY --from=cacher /app/target target
 COPY --from=cacher $CARGO_HOME $CARGO_HOME
-RUN cargo build --release --bin app
+RUN cargo build --release --bin sample-rust-time
 
 FROM debian:buster-slim as runtime
-WORKDIR app
-RUN pwd
-COPY --from=builder /app/target/release/app /usr/local/bin
-ENTRYPOINT ["/usr/local/bin/app"]
+WORKDIR /app
+COPY --from=builder /app/target/release/sample-rust-time /usr/local/sample-rust-time
+ENTRYPOINT ["/usr/local/bin/sample-rust-time"]
