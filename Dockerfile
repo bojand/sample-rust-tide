@@ -23,5 +23,5 @@ RUN cargo build --release --bin sample-rust-tide
 
 FROM debian:buster-slim as runtime
 WORKDIR /app
-COPY --from=builder /app/target/release/sample-rust-tide /usr/local/sample-rust-tide
+COPY --from=builder /app/target/release/sample-rust-tide /usr/local/bin/sample-rust-tide
 ENTRYPOINT ["/usr/local/bin/sample-rust-tide"]
