@@ -1,6 +1,6 @@
-name: sample-rust-tide-deps
+name: sample-rust-tide
 services:
-- name: tide-api
+- name: tide
   dockerfile_path: Dockerfile
   github:
     branch: main
