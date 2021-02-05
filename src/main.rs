@@ -20,7 +20,7 @@ async fn main() -> tide::Result<()> {
     let mut app = tide::new();
     
     app.with(tide::log::LogMiddleware::new());
-    app.at("/").post(get_main);
+    app.at("/").get(get_main);
     app.at("/hello").post(get_hello);
     app.at("/headers").get(get_headers);
     

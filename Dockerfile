@@ -9,7 +9,7 @@ WORKDIR /app
 COPY Cargo.toml Cargo.lock ./
 RUN cargo --frozen --locked build-deps --release
 COPY src /app/src
-RUN cargo build --frozen --locked --release
+RUN cargo build --frozen --locked --release --bin sample-rust-tide
 
 FROM debian:buster-slim as runtime
 WORKDIR /app
