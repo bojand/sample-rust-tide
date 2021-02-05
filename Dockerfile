@@ -1,6 +1,11 @@
-FROM rust:1.49 as builder
+FROM rust:1.49 as base
 WORKDIR /app
+# We only pay the installation cost once, 
+# it will be cached from the second build onwards
 RUN cargo install cargo-build-deps
+
+FROM base as builder
+WORKDIR /app
 COPY Cargo.toml Cargo.lock ./
 RUN cargo --frozen --locked build-deps --release
 COPY src /app/src
