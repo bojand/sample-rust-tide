@@ -38,7 +38,7 @@ async fn main() -> tide::Result<()> {
 async fn get_hello(mut req: Request<()>) -> tide::Result {
     let HelloRequest { name } = req.body_json().await?;
     let msg = HelloResponse {
-        message: format!("Hello {}!", name),
+        message: format!("Hello {}!!", name),
     };
 
     let mut res = Response::new(StatusCode::Ok);
