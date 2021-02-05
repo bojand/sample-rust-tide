@@ -1,0 +1,8 @@
+name: sample-rust-tide-deps
+services:
+- dockerfile_path: Dockerfile.deps
+  github:
+    branch: main
+    deploy_on_push: true
+    repo: bojand/sample-rust-tide
+  name: tide-api
