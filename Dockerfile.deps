@@ -1,7 +1,7 @@
 FROM rust:1.49 as builder
 WORKDIR /app
-RUN cargo install cargo-build-deps
 COPY Cargo.toml Cargo.lock ./
+RUN cargo install cargo-build-deps
 RUN cargo --frozen --locked build-deps --release
 COPY src /app/src
 RUN cargo build --frozen --locked --release
