@@ -37,7 +37,7 @@ async fn main() -> tide::Result<()> {
     };
 
     let public_url = match env::var("PUBLIC_URL") {
-        Ok(val) => val,
+        Ok(val) => val.trim_end_matches('/').to_string(),
         Err(_e) => "http://0.0.0.0:3000".to_string(),
     };
 
@@ -77,7 +77,7 @@ async fn get_hello(mut req: Request<State>) -> tide::Result {
     let msg = HelloResponse {
         message: format!("{} {}!", greet, name),
     };
-    
+
     let mut res = Response::new(StatusCode::Ok);
     res.set_body(Body::from_json(&msg)?);
     Ok(res)
