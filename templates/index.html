@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>gRPC Gateway Demo</title>
+    <link rel="stylesheet" href="https://fonts.xz.style/serve/inter.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@exampledev/new.css@1.1.2/new.min.css">
+</head>
+
+<body>
+    <header>
+        <h1>Tide demo</h1>
+    </header>
+
+    <h3>About</h3>
+    <br>
+    <p>
+        DigitalOcean App Platform demo using Rust Tide framework.
+    </p>
+    <h3>Usage</h3>
+    <br>
+    <pre>http POST '{{ public_url }}/hello' name=foo
+http POST '{{ public_url }}/hello' name=bar greeting=Hi
+http get '{{ public_url }}/headers'</pre>
+    <br>
+</body>
+
+</html>
