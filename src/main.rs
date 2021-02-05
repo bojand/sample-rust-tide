@@ -21,6 +21,7 @@ struct HelloResponse {
 #[derive(Debug, Deserialize)]
 struct HelloRequest {
     name: String,
+    greeting: Option<String>,
 }
 
 #[async_std::main]
@@ -64,11 +65,19 @@ async fn get_index(req: tide::Request<State>) -> tide::Result {
 }
 
 async fn get_hello(mut req: Request<State>) -> tide::Result {
-    let HelloRequest { name } = req.body_json().await?;
-    let msg = HelloResponse {
-        message: format!("Hello {}!", name),
+    let HelloRequest { name, greeting } = req.body_json().await?;
+    
+    let mut greet = "Hello".into();
+    if let Some(g) = greeting {
+        if !g.is_empty() {
+            greet = g;
+        }
     };
 
+    let msg = HelloResponse {
+        message: format!("{} {}!", greet, name),
+    };
+    
     let mut res = Response::new(StatusCode::Ok);
     res.set_body(Body::from_json(&msg)?);
     Ok(res)
