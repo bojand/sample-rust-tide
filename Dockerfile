@@ -6,12 +6,12 @@ RUN cargo install cargo-chef
 
 FROM base as planner
 COPY . .
-RUN cargo chef prepare --recipe-path /app/recipe.json
+RUN cargo --frozen --locked chef prepare --recipe-path /app/recipe.json
 
 FROM base as cacher
 WORKDIR /app
 COPY --from=planner /app/recipe.json /app/recipe.json
-RUN cargo chef cook --release --recipe-path /app/recipe.json
+RUN cargo --frozen --locked chef cook --release --recipe-path /app/recipe.json
 
 FROM rust:1.49 as builder
 WORKDIR /app
@@ -19,7 +19,7 @@ COPY . .
 # Copy over the cached dependencies
 COPY --from=cacher /app/target target
 COPY --from=cacher $CARGO_HOME $CARGO_HOME
-RUN cargo build --release --bin sample-rust-tide
+RUN cargo build --frozen --locked --release --bin sample-rust-tide
 
 FROM debian:buster-slim as runtime
 WORKDIR /app
