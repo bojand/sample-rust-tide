@@ -1,7 +1,7 @@
 use std::env;
 use std::collections::HashMap;
 use tide::prelude::*;
-use tide::{http::mime, Body, Request, Response, StatusCode, log};
+use tide::{Body, Request, Response, StatusCode, log};
 use tera::Tera;
 use tide_tera::prelude::*;
 
@@ -48,10 +48,10 @@ async fn main() -> tide::Result<()> {
     };
 
     let mut app = tide::with_state(state);
-    
-    app.with(tide_compress::CompressMiddleware::new());
+
     app.with(tide::log::LogMiddleware::new());
-    
+    app.with(tide_compress::CompressMiddleware::new());
+
     app.at("/").get(get_index);
     app.at("/hello").post(get_hello);
     app.at("/headers").get(get_headers);
@@ -91,12 +91,7 @@ async fn get_headers(req: Request<State>) -> tide::Result {
         headers.insert(name.as_str(), value.as_str());
     }
 
-    let data = serde_json::to_string(&headers).unwrap();
-
-    let res = Response::builder(StatusCode::Ok)
-        .body(data)
-        .content_type(mime::JSON)
-        .build();
-
+    let mut res = Response::new(StatusCode::Ok);
+    res.set_body(Body::from_json(&headers)?);
     Ok(res)
 }
