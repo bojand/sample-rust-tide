@@ -19,7 +19,7 @@ COPY . .
 # Copy over the cached dependencies
 COPY --from=cacher /app/target /app/target
 COPY --from=cacher /usr/local/cargo /usr/local/cargo
-RUN cargo build --offline --frozen --locked --release --bin sample-rust-tide
+RUN cargo build --frozen --locked --release --bin sample-rust-tide
 
 FROM debian:buster-slim as runtime
 WORKDIR /app
