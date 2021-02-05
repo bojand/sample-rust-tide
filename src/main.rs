@@ -20,6 +20,7 @@ async fn main() -> tide::Result<()> {
     let mut app = tide::new();
     
     app.with(tide::log::LogMiddleware::new());
+    app.at("/").post(get_main);
     app.at("/hello").post(get_hello);
     app.at("/headers").get(get_headers);
     
@@ -33,6 +34,10 @@ async fn main() -> tide::Result<()> {
     app.listen(format!("0.0.0.0:{}", port)).await?;
 
     Ok(())
+}
+
+async fn get_main(_req: Request<()>) -> tide::Result {
+    Ok("Hi there!".into())
 }
 
 async fn get_hello(mut req: Request<()>) -> tide::Result {
