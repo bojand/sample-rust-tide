@@ -25,9 +25,17 @@
     
     <h3>Usage</h3>
     <br>
-    <pre>http POST '{{ public_url }}/hello' name=foo
-http POST '{{ public_url }}/hello' name=bar greeting=Hi
-http get '{{ public_url }}/headers'</pre>
+    <pre>http POST \
+    '{{ public_url }}/hello' \
+    name=foo
+
+http POST \
+    '{{ public_url }}/hello' \
+    name=bar \
+    greeting=Hi
+
+http GET \
+    '{{ public_url }}/headers'</pre>
     <br>
 </body>
 

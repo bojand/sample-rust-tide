@@ -1,6 +1,6 @@
 # sample-rust-tide
 
-Sample [Tide](https://github.com/http-rs/tide) application for DigitalOcean App Platform.
+Sample DigitalOcean [App Platform](https://www.digitalocean.com/products/app-platform/) application in Rust using [Tide](https://github.com/http-rs/tide) framework.
 
 [![Deploy to DO](https://www.deploytodo.com/do-btn-blue.svg)](https://cloud.digitalocean.com/apps/new?repo=https://github.com/bojand/sample-rust-tide/tree/main)
 
