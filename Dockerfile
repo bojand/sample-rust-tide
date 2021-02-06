@@ -4,11 +4,11 @@ RUN cargo install cargo-build-deps
 
 FROM base as builder
 WORKDIR /app
-COPY Cargo.toml Cargo.lock ./
-RUN cargo --frozen --locked build-deps --release
+COPY Cargo.toml Cargo.lock /app/
+RUN cargo build-deps --release
 COPY src /app/src
 COPY templates /app/templates
-RUN cargo build --frozen --locked --release --bin sample-rust-tide
+RUN cargo build --release --bin sample-rust-tide
 
 FROM debian:buster-slim as runtime
 WORKDIR /app
