@@ -50,7 +50,6 @@ async fn main() -> tide::Result<()> {
     let mut app = tide::with_state(state);
 
     app.with(tide::log::LogMiddleware::new());
-    app.with(tide_compress::CompressMiddleware::new());
 
     app.at("/").get(get_index);
     app.at("/hello").post(get_hello);
