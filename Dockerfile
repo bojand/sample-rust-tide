@@ -3,6 +3,7 @@ WORKDIR /app
 RUN cargo install cargo-build-deps
 
 FROM base as builder
+RUN echo $SECRET_API
 WORKDIR /app
 COPY Cargo.toml Cargo.lock /app/
 RUN cargo build-deps --release
